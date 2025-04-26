@@ -27,7 +27,7 @@ resource "azurerm_virtual_network" "Devops_VN" {
 # }
 
 resource "azurerm_network_interface" "Devops_NI" {
-  name                = "Devops_NI-nic"
+  name                = "Devops_NI"
   location            = "UK West"
   resource_group_name = "Devops_RG"
 
