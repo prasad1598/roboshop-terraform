@@ -52,7 +52,7 @@ delete_os_disk_on_termination = true
   # delete_data_disks_on_termination = true
 
   storage_image_reference {
-    id = "/subscriptions/323379f3-3beb-4865-821e-0fff68e4d4ca/resourceGroups/project-setup-1/providers/Microsoft.Compute/images/local-devops-practice"
+    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/local-devops-practice"
   }
   storage_os_disk {
     name              = "workstation-disk"
