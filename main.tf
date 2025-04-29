@@ -1,738 +1,121 @@
-provider "azurerm" {
-  features {}
-  subscription_id = "aa32da49-0603-4855-b55b-bfd4bcf7b16f"
+module "frontend" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "frontend"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_public_ip" "frontend" {
-  name                = "frontend-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
+module "mongodb" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "mongodb"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_network_interface" "frontend" {
-  name                = "frontend-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "frontend-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.frontend.id
-  }
+module "catalogue" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "catalogue"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_network_interface_security_group_association" "frontend" {
-  network_interface_id      = azurerm_network_interface.frontend.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
+module "redis" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "redis"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_virtual_machine" "frontend" {
-  name                = "frontend"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.frontend.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "frontend-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "frontend-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
+module "user" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "user"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_dns_a_record" "frontend" {
-  name                = "frontend-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.frontend.private_ip_address]
+module "cart" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "cart"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
 
-resource "azurerm_public_ip" "mongodb" {
-  name                = "mongodb-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
+module "mysql" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "mysql"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_network_interface" "mongodb" {
-  name                = "mongodb-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "mongodb-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.mongodb.id
-  }
+module "shipping" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "shipping"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_network_interface_security_group_association" "mongodb" {
-  network_interface_id      = azurerm_network_interface.mongodb.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
+module "rabbitmq" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "rabbitmq"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_virtual_machine" "mongodb" {
-  name                = "mongodb"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.mongodb.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "mongodb-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "mongodb-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
+module "payment" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "payment"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
 
-resource "azurerm_dns_a_record" "mongodb" {
-  name                = "mongodb-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.mongodb.private_ip_address]
-}
-
-
-resource "azurerm_public_ip" "catalogue" {
-  name                = "catalogue-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "catalogue" {
-  name                = "catalogue-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "catalogue-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.catalogue.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "catalogue" {
-  network_interface_id      = azurerm_network_interface.catalogue.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "catalogue" {
-  name                = "catalogue"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.catalogue.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "catalogue-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "catalogue-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "catalogue" {
-  name                = "catalogue-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.catalogue.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "redis" {
-  name                = "redis-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "redis" {
-  name                = "redis-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "redis-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.redis.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "redis" {
-  network_interface_id      = azurerm_network_interface.redis.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "redis" {
-  name                = "redis"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.redis.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "redis-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "redis-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "redis" {
-  name                = "redis-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.redis.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "user" {
-  name                = "user-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "user" {
-  name                = "user-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "user-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.user.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "user" {
-  network_interface_id      = azurerm_network_interface.user.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "user" {
-  name                = "user"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.user.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "user-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "user-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "user" {
-  name                = "user-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.user.private_ip_address]
-}
-
-
-
-
-resource "azurerm_public_ip" "cart" {
-  name                = "cart-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "cart" {
-  name                = "cart-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "cart-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.cart.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "cart" {
-  network_interface_id      = azurerm_network_interface.cart.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "cart" {
-  name                = "cart"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.cart.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "cart-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "cart-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "cart" {
-  name                = "cart-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.cart.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "mysql" {
-  name                = "mysql-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "mysql" {
-  name                = "mysql-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "mysql-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.mysql.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "mysql" {
-  network_interface_id      = azurerm_network_interface.mysql.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "mysql" {
-  name                = "mysql"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.mysql.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "mysql-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "mysql-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "mysql" {
-  name                = "mysql-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.mysql.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "shipping" {
-  name                = "shipping-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "shipping" {
-  name                = "shipping-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "shipping-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.shipping.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "shipping" {
-  network_interface_id      = azurerm_network_interface.shipping.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "shipping" {
-  name                = "shipping"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.shipping.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "shipping-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "shipping-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "shipping" {
-  name                = "shipping-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.shipping.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "rabbitmq" {
-  name                = "rabbitmq-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "rabbitmq" {
-  name                = "rabbitmq-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "rabbitmq-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.rabbitmq.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "rabbitmq" {
-  network_interface_id      = azurerm_network_interface.rabbitmq.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "rabbitmq" {
-  name                = "rabbitmq"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.rabbitmq.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "rabbitmq-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "rabbitmq-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "rabbitmq" {
-  name                = "rabbitmq-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.rabbitmq.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "payment" {
-  name                = "payment-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "payment" {
-  name                = "payment-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "payment-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.payment.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "payment" {
-  network_interface_id      = azurerm_network_interface.payment.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "payment" {
-  name                = "payment"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.payment.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "payment-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "payment-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "payment" {
-  name                = "payment-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.payment.private_ip_address]
-}
-
-
-
-resource "azurerm_public_ip" "dispatch" {
-  name                = "dispatch-ip"
-  resource_group_name = "Project_RG"
-  location            = "UK West"
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "dispatch" {
-  name                = "dispatch-nic"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-
-  ip_configuration {
-    name                          = "dispatch-nic"
-    subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.dispatch.id
-  }
-}
-
-resource "azurerm_network_interface_security_group_association" "dispatch" {
-  network_interface_id      = azurerm_network_interface.dispatch.id
-  network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
-}
-
-resource "azurerm_virtual_machine" "dispatch" {
-  name                = "dispatch"
-  location            = "UK West"
-  resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.dispatch.id]
-  vm_size = "Standard_B1ms"
-
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
-  }
-  storage_os_disk {
-    name              = "dispatch-vm-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "dispatch-vm"
-    admin_username = "azuser"
-    admin_password = "Muniprasad@123"
-  }
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-}
-
-resource "azurerm_dns_a_record" "dispatch" {
-  name                = "dispatch-dev"
-  zone_name           = "prasaddevops.shop"
-  resource_group_name = "Project_RG"
-  ttl                 = 3
-  records             = [azurerm_network_interface.dispatch.private_ip_address]
+module "shipping" {
+  source = "./component"
+  ip_configuration_subnet_id ="var.ip_configuration_subnet_id"
+  location = "var.location"
+  network_security_group_id = "var.network_security_group_id"
+  name = "shipping"
+  rg_name = "var.rg_name"
+  storage_image_reference_id = "var.storage_image_reference_id"
+  zone_name = "var.zone_name"
 }
