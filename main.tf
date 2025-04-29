@@ -202,36 +202,36 @@ resource "azurerm_dns_a_record" "catalogue" {
 
 
 
-resource "azurerm_public_ip" "Redis" {
-  name                = "Redis-ip"
+resource "azurerm_public_ip" "redis" {
+  name                = "redis-ip"
   resource_group_name = "Project_RG"
   location            = "UK West"
   allocation_method   = "Static"
 }
 
-resource "azurerm_network_interface" "Redis" {
-  name                = "Redis-nic"
+resource "azurerm_network_interface" "redis" {
+  name                = "redis-nic"
   location            = "UK West"
   resource_group_name = "Project_RG"
 
   ip_configuration {
-    name                          = "Redis-nic"
+    name                          = "redis-nic"
     subnet_id                     = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.Redis.id
+    public_ip_address_id          = azurerm_public_ip.redis.id
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
-  network_interface_id      = azurerm_network_interface.Redis.id
+resource "azurerm_network_interface_security_group_association" "redis" {
+  network_interface_id      = azurerm_network_interface.redis.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
 
-resource "azurerm_virtual_machine" "Redis" {
-  name                = "Redis"
+resource "azurerm_virtual_machine" "redis" {
+  name                = "redis"
   location            = "UK West"
   resource_group_name = "Project_RG"
-  network_interface_ids = [azurerm_network_interface.Redis.id]
+  network_interface_ids = [azurerm_network_interface.redis.id]
   vm_size = "Standard_B1ms"
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -244,13 +244,13 @@ resource "azurerm_virtual_machine" "Redis" {
     id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Compute/images/test-devops-practice"
   }
   storage_os_disk {
-    name              = "Redis-vm-disk"
+    name              = "redis-vm-disk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name  = "Redis-vm"
+    computer_name  = "redis-vm"
     admin_username = "azuser"
     admin_password = "Muniprasad@123"
   }
@@ -259,12 +259,12 @@ resource "azurerm_virtual_machine" "Redis" {
   }
 }
 
-resource "azurerm_dns_a_record" "Redis" {
-  name                = "Redis-dev"
+resource "azurerm_dns_a_record" "redis" {
+  name                = "redis-dev"
   zone_name           = "prasaddevops.shop"
   resource_group_name = "Project_RG"
   ttl                 = 3
-  records             = [azurerm_network_interface.Redis.private_ip_address]
+  records             = [azurerm_network_interface.redis.private_ip_address]
 }
 
 
@@ -289,7 +289,7 @@ resource "azurerm_network_interface" "user" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "user" {
   network_interface_id      = azurerm_network_interface.user.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
@@ -357,7 +357,7 @@ resource "azurerm_network_interface" "cart" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "cart" {
   network_interface_id      = azurerm_network_interface.cart.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
@@ -424,7 +424,7 @@ resource "azurerm_network_interface" "mysql" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "mysql" {
   network_interface_id      = azurerm_network_interface.mysql.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
@@ -491,7 +491,7 @@ resource "azurerm_network_interface" "shipping" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "shipping" {
   network_interface_id      = azurerm_network_interface.shipping.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
@@ -558,7 +558,7 @@ resource "azurerm_network_interface" "rabbitmq" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "rabbitmq" {
   network_interface_id      = azurerm_network_interface.rabbitmq.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
@@ -625,7 +625,7 @@ resource "azurerm_network_interface" "payment" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "payment" {
   network_interface_id      = azurerm_network_interface.payment.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
@@ -692,7 +692,7 @@ resource "azurerm_network_interface" "dispatch" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "dispatch" {
   network_interface_id      = azurerm_network_interface.dispatch.id
   network_security_group_id = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/networkSecurityGroups/Project_NSG"
 }
