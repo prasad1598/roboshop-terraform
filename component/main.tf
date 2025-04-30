@@ -53,9 +53,14 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
 }
 
+
 resource "null_resource" "ansible" {
+  depends_on = [
+    azurerm_virtual_machine.vm
+  ]
   connection {
     type     = "ssh"
     user     = "azuser"
