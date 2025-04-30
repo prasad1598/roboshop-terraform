@@ -21,3 +21,24 @@ variable "zone_name" {
 variable "location" {
   default = "UK West"
 }
+
+variable "databases" {
+  default = {
+    mongodb = {}
+    rabbitmq = {}
+    mysql = {}
+    redis = {}
+  }
+}
+
+variable "applications" {
+  default = {
+    catalogue = {}
+    user = {}
+    cart = {}
+    payment = {}
+    shipping = {}
+    dispatch = {}
+    frontend = {}
+  }
+}
