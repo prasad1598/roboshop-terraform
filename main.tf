@@ -1,7 +1,7 @@
 module "frontend" {
   source                     = "./component"
-  ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  ip_configuration_subnet_id = var.ip_configuration_subnet_id
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "frontend"
   rg_name                    = "var.rg_name"
@@ -12,7 +12,7 @@ module "frontend" {
 module "mongodb" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "mongodb"
   rg_name                    = "var.rg_name"
@@ -23,7 +23,7 @@ module "mongodb" {
 module "catalogue" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "catalogue"
   rg_name                    = "var.rg_name"
@@ -34,7 +34,7 @@ module "catalogue" {
 module "redis" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "redis"
   rg_name                    = "var.rg_name"
@@ -45,7 +45,7 @@ module "redis" {
 module "user" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "user"
   rg_name                    = "var.rg_name"
@@ -56,7 +56,7 @@ module "user" {
 module "cart" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "cart"
   rg_name                    = "var.rg_name"
@@ -68,7 +68,7 @@ module "cart" {
 module "mysql" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "mysql"
   rg_name                    = "var.rg_name"
@@ -79,7 +79,7 @@ module "mysql" {
 module "shipping" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "shipping"
   rg_name                    = "var.rg_name"
@@ -90,7 +90,7 @@ module "shipping" {
 module "rabbitmq" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "rabbitmq"
   rg_name                    = "var.rg_name"
@@ -101,7 +101,7 @@ module "rabbitmq" {
 module "payment" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "payment"
   rg_name                    = "var.rg_name"
@@ -112,7 +112,7 @@ module "payment" {
 module "dispatch" {
   source                     = "./component"
   ip_configuration_subnet_id = "var.ip_configuration_subnet_id"
-  location                   = "var.location"
+  location                   = var.location
   network_security_group_id  = "var.network_security_group_id"
   name                       = "dispatch"
   rg_name                    = "var.rg_name"
