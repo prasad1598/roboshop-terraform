@@ -55,7 +55,7 @@ resource "azurerm_virtual_machine" "vm" {
   }
 }
 
-resource "null_resource" "null" {
+resource "null_resource" "ansible" {
   connection {
     type     = "ssh"
     user     = "azuser"
