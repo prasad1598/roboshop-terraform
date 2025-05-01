@@ -53,14 +53,6 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
-
-}
-
-
-resource "null_resource" "ansible" {
-  depends_on = [
-    azurerm_virtual_machine.vm
-  ]
   connection {
     type     = "ssh"
     user     = "azuser"
@@ -76,6 +68,27 @@ resource "null_resource" "ansible" {
     ]
   }
 }
+
+
+# resource "null_resource" "ansible" {
+#   depends_on = [
+#     azurerm_virtual_machine.vm
+#   ]
+#   connection {
+#     type     = "ssh"
+#     user     = "azuser"
+#     password = "Muniprasad@123"
+#     host     = azurerm_network_interface.privateip.private_ip_address
+#   }
+#
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo dnf install python3.12 python3.12-pip -y",
+#       "sudo pip3.12 install ansible",
+#       "ansible-pull -i localhost, -U https://github.com/prasad1598/roboshop-ansible roboshop.yml -e app_name=${var.name} -e env=dev"
+#     ]
+#   }
+# }
 
 resource "azurerm_dns_a_record" "dnszone" {
   name                = "${var.name}-dev"
