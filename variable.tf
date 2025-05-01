@@ -18,9 +18,9 @@ variable "zone_name" {
   default = "prasaddevops.shop"
 }
 
-variable "location" {
-  default = "UK West"
-}
+# variable "location" {
+#   default = "UK West"
+# }
 
 variable "databases" {
   default = {

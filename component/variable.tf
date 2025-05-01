@@ -1,5 +1,5 @@
 variable "name" {}
-variable "location" {}
+# variable "location" {}
 variable "rg_name" {}
 variable "storage_image_reference_id" {}
 variable "zone_name" {}
