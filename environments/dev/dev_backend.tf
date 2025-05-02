@@ -4,5 +4,4 @@ resource_group_name  = var.name_rg
 storage_account_name = "terratfstateform"
 container_name       = "roboshop-tfstate-files"
 key                  = "dev.terraform.tfstate"
-  }
-}
+
