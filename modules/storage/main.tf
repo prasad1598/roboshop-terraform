@@ -1,7 +1,7 @@
 resource "azurerm_storage_account" "tfstate" {
   name                     = var.storage_account
-  resource_group_name      = var.rg_name
-  location                 = var.rg_location
+  resource_group_name      = var.name
+  location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
