@@ -30,6 +30,7 @@ module "resource-group" {
 }
 
 module "azurerm_storage" {
+  depends_on             = [module.resource-group]
   source                 = "./modules/storage"
   name                   = var.storage_account
   rg_location            = var.rg_location
