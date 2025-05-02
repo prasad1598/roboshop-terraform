@@ -27,6 +27,6 @@ module "resource-group" {
   for_each = var.rg_name
   source = "./modules/resource-group"
   name = var.rg_name
-  location = var.location
+  location = var.rg_location
 }
 
