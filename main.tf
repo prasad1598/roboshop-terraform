@@ -29,10 +29,10 @@ module "resource-group" {
   location = var.rg_location
 }
 
-module "azurerm_storage_container" {
-  source            = "./modules/storage"
-  name              = var.rg_name
-  location          = var.rg_location
-  name   = var.storage_account
+module "azurerm_storage" {
+  source                 = "./modules/storage"
+  name                   = var.storage_account
+  location               = var.rg_location
+  resource_group_name    = var.rg_name
   storage_container_name = var.storage_container
 }

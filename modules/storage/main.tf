@@ -13,5 +13,5 @@ resource "azurerm_storage_container" "tfstate" {
 }
 
 
-prasaddevopstfstate
-terraformtfstate
+# prasaddevopstfstate
+# terraformtfstate
