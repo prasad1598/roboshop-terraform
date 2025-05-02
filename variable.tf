@@ -1,7 +1,7 @@
-# # variable "rg_name" {
-# #   default = "Project_RG"
-# # }
-#
+variable "name_rg" {
+  default = "project_rg"
+}
+
 # variable "ip_configuration_subnet_id" {
 #   default = "/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/Project_RG/providers/Microsoft.Network/virtualNetworks/Project_VN/subnets/default"
 # }
