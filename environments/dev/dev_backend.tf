@@ -1,10 +1,8 @@
-terraform {
-  backend "azurerm" {
-    use_cli              = true
-    subscription_id      = "aa32da49-0603-4855-b55b-bfd4bcf7b16f"
-    resource_group_name  = var.name_rg
-    storage_account_name = "terratfstateform"
-    container_name       = "roboshop-tfstate-files"
-    key                  = "dev.terraform.tfstate"
+use_cli              = true
+subscription_id      = "aa32da49-0603-4855-b55b-bfd4bcf7b16f"
+resource_group_name  = var.name_rg
+storage_account_name = "terratfstateform"
+container_name       = "roboshop-tfstate-files"
+key                  = "dev.terraform.tfstate"
   }
 }
