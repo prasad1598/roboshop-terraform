@@ -32,7 +32,7 @@ module "resource-group" {
 module "azurerm_storage" {
   source                 = "./modules/storage"
   name                   = var.storage_account
-  location               = var.rg_location
-  resource_group_name    = var.rg_name
+  rg_location            = var.rg_location
+  rg_name                = var.rg_name
   storage_container_name = var.storage_container
 }
