@@ -45,7 +45,7 @@ variable "rg_name" {}
 variable "rg_location" {}
 
 variable "storage_account" {
-  defailt = "prasaddevopstfstate"
+  default = "prasaddevopstfstate"
 }
 variable "storage_container" {
   default = "terraformtfstate"
