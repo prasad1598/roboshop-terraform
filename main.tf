@@ -33,4 +33,6 @@ module "azurerm_storage_container" {
   source            = "./modules/storage"
   name              = var.rg_name
   location          = var.rg_location
+  name   = var.storage_account
+  storage_container_name = var.storage_container
 }
