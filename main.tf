@@ -29,11 +29,11 @@ module "resource-group" {
   location = var.rg_location
 }
 
-module "azurerm_storage" {
-  depends_on             = [module.resource-group]
-  source                 = "./modules/storage"
-  name                   = var.storage_account
-  rg_location            = var.rg_location
-  name_rg                = var.name_rg
-  storage_container_name = var.storage_container
-}
+# module "azurerm_storage" {
+#   depends_on             = [module.resource-group]
+#   source                 = "./modules/storage"
+#   name                   = var.storage_account
+#   rg_location            = var.rg_location
+#   name_rg                = var.name_rg
+#   storage_container_name = var.storage_container
+# }
