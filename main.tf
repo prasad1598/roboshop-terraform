@@ -1,5 +1,5 @@
 module "resource-group" {
-  for_each = rg_name
+  for_each = var.rg_name
   source   = "./modules/resource-group"
   name     = "${each.key}-${var.env}"
   location = "each.value[location]"
