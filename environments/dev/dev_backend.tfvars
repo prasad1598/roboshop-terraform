@@ -3,4 +3,3 @@ resource_group_name  = "project_rg"
 storage_account_name = "terratfstateform"
 container_name       = "roboshop-tfstate-files"
 key                  = "dev.terraform.tfstate"
-
