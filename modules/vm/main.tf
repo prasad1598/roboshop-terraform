@@ -1,13 +1,13 @@
 resource "azurerm_public_ip" "publicip" {
   name                = var.name
   resource_group_name = var.rg_name
-  location            = data.azurerm_resource_group.rg.location
+  location            = var.rg_location
   allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "privateip" {
   name                = var.name
-  location            = data.azurerm_resource_group.rg.location
+  location            = var.rg_location
   resource_group_name = var.rg_name
 
   ip_configuration {
@@ -25,7 +25,7 @@ resource "azurerm_network_interface_security_group_association" "NSG_attach" {
 
 resource "azurerm_virtual_machine" "vm" {
   name                  = var.name
-  location              = data.azurerm_resource_group.rg.location
+  location              = var.rg_location
   resource_group_name   = var.rg_name
   network_interface_ids = [azurerm_network_interface.privateip.id]
   vm_size               = "Standard_B1ms"
@@ -93,7 +93,7 @@ resource "azurerm_virtual_machine" "vm" {
 resource "azurerm_dns_a_record" "dnszone" {
   name                = "${var.name}-dev"
   zone_name           = "prasaddevops.shop"
-  resource_group_name = var.rg_name
+  resource_group_name = var.dns_record_rg_name
   ttl                 = 3
   records             = [azurerm_network_interface.privateip.private_ip_address]
 }
