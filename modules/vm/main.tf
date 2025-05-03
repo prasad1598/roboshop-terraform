@@ -93,7 +93,7 @@ resource "azurerm_virtual_machine" "vm" {
 resource "azurerm_dns_a_record" "dnszone" {
   name                = "${var.name}-dev"
   zone_name           = "prasaddevops.shop"
-  resource_group_name = var.dns_record_rg_name
+  resource_group_name = var.zone_name
   ttl                 = 3
   records             = [azurerm_network_interface.privateip.private_ip_address]
 }
