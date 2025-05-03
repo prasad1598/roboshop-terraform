@@ -14,6 +14,7 @@ module "databases" {
   network_security_group_id  = var.network_security_group_id
   rg_name                    = module.resource-group[each.value["rgname"]].name
   storage_image_reference_id = var.storage_image_reference_id
+  zone_name                  = var.zone_name
   dns_record_rg_name         = var.dns_record_rg_name
 }
 
@@ -27,6 +28,7 @@ module "application" {
   ip_configuration_subnet_id = var.ip_configuration_subnet_id
   rg_name                    = module.resource-group[each.value["rgname"]].name
   storage_image_reference_id = var.storage_image_reference_id
+  zone_name                  = var.zone_name
   dns_record_rg_name         = var.dns_record_rg_name
 }
 
