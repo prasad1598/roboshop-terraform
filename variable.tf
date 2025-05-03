@@ -1,6 +1,5 @@
 variable "env" {}
 variable "rg_name" {}
-# variable "rg_location" {}
 variable "zone_name" {}
 variable "storage_image_reference_id" {}
 variable "network_security_group_id" {}
