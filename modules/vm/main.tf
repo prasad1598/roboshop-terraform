@@ -48,7 +48,7 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile {
     computer_name  = var.name
     admin_username = "azuser"
-    admin_password = "Muniprasad@123"
+    admin_password = "Devops@12345"
   }
   os_profile_linux_config {
     disable_password_authentication = false
@@ -56,7 +56,7 @@ resource "azurerm_virtual_machine" "vm" {
   connection {
     type     = "ssh"
     user     = "azuser"
-    password = "Muniprasad@123"
+    password = "Devops@12345"
     host     = azurerm_network_interface.privateip.private_ip_address
   }
 
