@@ -16,6 +16,7 @@ module "databases" {
   storage_image_reference_id = var.storage_image_reference_id
   zone_name                  = var.zone_name
   dns_record_rg_name         = var.dns_record_rg_name
+  token                      = var.token
 }
 
 module "application" {
@@ -30,6 +31,7 @@ module "application" {
   storage_image_reference_id = var.storage_image_reference_id
   zone_name                  = var.zone_name
   dns_record_rg_name         = var.dns_record_rg_name
+  token                      = var.token
 }
 
 
