@@ -7,3 +7,4 @@ variable "ip_configuration_subnet_id" {}
 variable "databases" {}
 variable "applications" {}
 variable "dns_record_rg_name" {}
+variable "token" {}
