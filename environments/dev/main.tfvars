@@ -37,9 +37,6 @@ applications = {
   shipping = {
     rgname = "ukwest"
   }
-  dispatch = {
-    rgname = "ukwest"
-  }
   frontend = {
     rgname = "ukwest"
   }
