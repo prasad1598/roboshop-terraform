@@ -17,6 +17,7 @@ module "databases" {
   zone_name                  = var.zone_name
   dns_record_rg_name         = var.dns_record_rg_name
   token                      = var.token
+  type                       = "db"
 }
 
 module "application" {
@@ -32,15 +33,5 @@ module "application" {
   zone_name                  = var.zone_name
   dns_record_rg_name         = var.dns_record_rg_name
   token                      = var.token
+  type                       = "app"
 }
-
-
-
-# module "azurerm_storage" {
-#   depends_on             = [module.resource-group]
-#   source                 = "./modules/storage"
-#   name                   = var.storage_account
-#   rg_location            = var.rg_location
-#   name_rg                = var.name_rg
-#   storage_container_name = var.storage_container
-# }
