@@ -1,4 +1,4 @@
-resource "azurerm_kubernetes_cluster" "main" {
+resource "azurerm_kubernetes_cluster" "main-dev" {
   name                = var.name
   location            = var.rg_location
   resource_group_name = var.rg_name
