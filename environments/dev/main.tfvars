@@ -10,33 +10,33 @@ databases = {
   mongodb = {
     rgname = "ukwest"
   }
-  rabbitmq = {
-    rgname = "ukwest"
-  }
-  mysql = {
-    rgname = "ukwest"
-  }
-  redis = {
-    rgname = "ukwest"
-  }
+  # rabbitmq = {
+  #   rgname = "ukwest"
+  # }
+  # mysql = {
+  #   rgname = "ukwest"
+  # }
+  # redis = {
+  #   rgname = "ukwest"
+  # }
 }
 
 applications = {
   catalogue = {
     rgname = "ukwest"
   }
-  user = {
-    rgname = "ukwest"
-  }
-  cart = {
-    rgname = "ukwest"
-  }
-  payment = {
-    rgname = "ukwest"
-  }
-  shipping = {
-    rgname = "ukwest"
-  }
+  # user = {
+  #   rgname = "ukwest"
+  # }
+  # cart = {
+  #   rgname = "ukwest"
+  # }
+  # payment = {
+  #   rgname = "ukwest"
+  # }
+  # shipping = {
+  #   rgname = "ukwest"
+  # }
   frontend = {
     rgname = "ukwest"
   }
