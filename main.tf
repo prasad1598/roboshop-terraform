@@ -36,4 +36,10 @@ module "application" {
   type                       = "app"
 }
 
-# terraform import 'module.application["cart"].azurerm_virtual_machine.vm' '/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/ukwest-dev/providers/Microsoft.Compute/virtualMachines/cart'
+module "aks" {
+  for_each    = var.aks
+  source      = "./modules/aks"
+  name        = each.key
+  rg_name     = module.resource-group[each.value["rgname"]].name
+  rg_location = module.resource-group[each.value["rgname"]].location
+}
