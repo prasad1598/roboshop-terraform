@@ -35,3 +35,5 @@ module "application" {
   token                      = var.token
   type                       = "app"
 }
+
+# terraform import 'module.application["cart"].azurerm_virtual_machine.vm' '/subscriptions/aa32da49-0603-4855-b55b-bfd4bcf7b16f/resourceGroups/ukwest-dev/providers/Microsoft.Compute/virtualMachines/cart'
